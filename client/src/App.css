@@ -25,7 +25,6 @@ body {
   justify-content: center;
 }
 
-/* Keyframes for the gradient animation */
 @keyframes bodyColorShift {
   0% {
     background-position: 0% 50%;
@@ -128,9 +127,6 @@ button:active {
   transform: scale(0.95);
 }
 
-/* 
-  Loading state or disabled button
--------------------------------------------------- */
 button:disabled {
   background: #bbb;
   cursor: not-allowed;
@@ -161,6 +157,28 @@ button:disabled {
 }
 
 /* 
+  Media Container (video & image)
+-------------------------------------------------- */
+.media-container {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.insta-video,
+.insta-image {
+  max-width: 100%;
+  height: auto;
+  border: 2px solid #ec407a;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+/* For images specifically, ensure the entire image shows if aspect ratio is unusual */
+.insta-image {
+  object-fit: contain;
+}
+
+/* 
   Responsive Media Query
 -------------------------------------------------- */
 @media (max-width: 480px) {
@@ -173,4 +191,3 @@ button:disabled {
     font-size: 1.75rem;
   }
 }
-
