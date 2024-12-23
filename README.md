@@ -1,6 +1,6 @@
 ---
 
-# Instagram Downloader
+## Instagram Downloader
 
 A full-stack Node/Express + React application for downloading Instagram posts and Reels **without** using the official Instagram API. This tool scrapes publicly available metadata (via HTML) to retrieve the direct URL of images or videos.
 
