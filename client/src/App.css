@@ -1,83 +1,176 @@
+/* 
+  Reset & Base Styles
+-------------------------------------------------- */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Arial', sans-serif;
 }
 
+html, body {
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* 
+  Animated Gradient Background
+-------------------------------------------------- */
 body {
-  background: #f4f4f4;
-  color: #333;
+  /* Animated gradient background */
+  background: linear-gradient(270deg, #FF6A6A, #FFC663, #81FF8B, #4DEEEE);
+  background-size: 800% 800%;
+  animation: bodyColorShift 20s ease infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Keyframes for the gradient animation */
+@keyframes bodyColorShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* 
+  Container
+-------------------------------------------------- */
 .container {
   width: 90%;
   max-width: 600px;
-  margin: 50px auto;
-  background: #fff;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  min-height: 400px;
+  background: #ffffffee; /* Slightly transparent white */
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  position: relative;
+  /* Fade-in animation for the container */
+  opacity: 0;
+  animation: fadeIn 1.2s ease forwards;
 }
 
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* 
+  Title Styling (with gradient text)
+-------------------------------------------------- */
 h1 {
+  font-size: 2rem;
   text-align: center;
   margin-bottom: 20px;
-  color: #333;
+  background: linear-gradient(45deg, #ec407a, #fbc02d, #66bb6a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
+/* 
+  Form Elements
+-------------------------------------------------- */
 .form-group {
   margin-bottom: 20px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   font-weight: 600;
+  color: #444;
 }
 
 .form-group input {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  transition: border 0.3s, box-shadow 0.3s;
 }
 
+.form-group input:focus {
+  outline: none;
+  border-color: #ec407a;
+  box-shadow: 0 0 5px rgba(236, 64, 122, 0.4);
+}
+
+/* 
+  Button Styles (with hover & active animations)
+-------------------------------------------------- */
 button {
   display: inline-block;
-  background: #0072e5;
+  padding: 12px 24px;
+  background: #ec407a;
   color: #fff;
-  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 500;
   border: none;
-  border-radius: 4px;
+  border-radius: 25px;
   cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
 }
 
 button:hover {
-  background: #005bb5;
+  transform: translateY(-3px);
+  background: #d81b60;
+  box-shadow: 0 8px 20px rgba(216, 27, 96, 0.3);
 }
 
+button:active {
+  transform: scale(0.95);
+}
+
+/* 
+  Loading state or disabled button
+-------------------------------------------------- */
+button:disabled {
+  background: #bbb;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* 
+  Result area
+-------------------------------------------------- */
 .result {
   margin-top: 20px;
+  font-size: 1rem;
+}
+
+.result p {
+  margin-bottom: 10px;
 }
 
 .result a {
-  color: #0072e5;
+  color: #ec407a;
   text-decoration: none;
+  font-weight: 600;
 }
 
 .result a:hover {
   text-decoration: underline;
 }
 
-/* Responsive Media Query */
+/* 
+  Responsive Media Query
+-------------------------------------------------- */
 @media (max-width: 480px) {
   .container {
     margin: 20px auto;
-    padding: 15px;
+    padding: 20px;
   }
 
   h1 {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
   }
 }
+
