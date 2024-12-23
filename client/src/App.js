@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './App.css';
 
 function App() {
   const [instaUrl, setInstaUrl] = useState('');
@@ -23,12 +24,9 @@ function App() {
     try {
       const response = await fetch('/api/download', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ url: instaUrl })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: instaUrl }),
       });
-
       const data = await response.json();
 
       if (!data.success) {
@@ -58,7 +56,7 @@ function App() {
           <input
             id="insta-url"
             type="text"
-            placeholder="e.g. https://www.instagram.com/p/xxxxxxxxx/"
+            placeholder="e.g. https://www.instagram.com/p/XXXXXXXXX/"
             value={instaUrl}
             onChange={(e) => setInstaUrl(e.target.value)}
           />
@@ -70,21 +68,33 @@ function App() {
 
       <div className="result">
         {errorMsg && <p style={{ color: 'red' }}>{errorMsg}</p>}
+
+        {/* VIDEO PREVIEW */}
         {videoUrl && (
-          <p>
-            Video found!{' '}
-            <a href={videoUrl} target="_blank" rel="noopener noreferrer">
-              Click here to open
-            </a>
-          </p>
+          <div className="media-container">
+            <h3>Video Preview:</h3>
+            <video className="insta-video" controls src={videoUrl}>
+              Sorry, your browser doesn't support embedded videos.
+            </video>
+            <p>
+              <a href={videoUrl} target="_blank" rel="noopener noreferrer">
+                Open Video in New Tab
+              </a>
+            </p>
+          </div>
         )}
+
+        {/* IMAGE PREVIEW */}
         {imageUrl && (
-          <p>
-            Image found!{' '}
-            <a href={imageUrl} target="_blank" rel="noopener noreferrer">
-              Click here to open
-            </a>
-          </p>
+          <div className="media-container">
+            <h3>Image Preview:</h3>
+            <img className="insta-image" src={imageUrl} alt="Instagram content" />
+            <p>
+              <a href={imageUrl} target="_blank" rel="noopener noreferrer">
+                Open Image in New Tab
+              </a>
+            </p>
+          </div>
         )}
       </div>
     </div>
