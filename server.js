@@ -1,5 +1,5 @@
 {
-  "name": "instagram-downloader",
+  "name": "instagram-reel-downloader",
   "version": "1.0.0",
   "description": "Instagram post/reels downloader without using official API",
   "main": "server.js",
