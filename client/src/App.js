@@ -75,8 +75,7 @@ function App() {
             Video found!{' '}
             <a href={videoUrl} target="_blank" rel="noopener noreferrer">
               Click here to open
-            </a>{' '}
-            or right-click and "Save video as..."
+            </a>
           </p>
         )}
         {imageUrl && (
@@ -84,8 +83,7 @@ function App() {
             Image found!{' '}
             <a href={imageUrl} target="_blank" rel="noopener noreferrer">
               Click here to open
-            </a>{' '}
-            or right-click and "Save image as..."
+            </a>
           </p>
         )}
       </div>
