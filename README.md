@@ -1,5 +1,3 @@
-Below is a sample **README.md** file you can place at the root of your GitHub repository (e.g., `instagram-downloader/README.md`). Adjust it as needed for your own project and instructions.
-
 ---
 
 # Instagram Downloader
