@@ -4,7 +4,7 @@
 
 A full-stack Node/Express + React application for downloading Instagram posts and Reels **without** using the official Instagram API. This tool scrapes publicly available metadata (via HTML) to retrieve the direct URL of images or videos.
 
-> **Disclaimer**: This project is for educational/personal use only. Instagram may change its HTML structure or impose new security measures at any time, which could break this approach. Always comply with local laws and Instagram's Terms of Service.
+**Disclaimer**: This project is for educational/personal use only. Instagram may change its HTML structure or impose new security measures at any time, which could break this approach. Always comply with local laws and Instagram's Terms of Service.
 
 ---
 
