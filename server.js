@@ -11,12 +11,13 @@ app.use(express.json());
 app.post('/api/download', async (req, res) => {
   const { url } = req.body;
 
-  if (!url) {
-    return res.status(400).json({ success: false, error: 'URL is required.' });
+  if (!url || !url.startsWith('https://www.instagram.com/')) {
+    return res.status(400).json({ success: false, error: 'Invalid Instagram URL.' });
   }
 
   try {
-    // Fetch the Instagram page HTML
+    console.log(`Fetching Instagram URL: ${url}`); // Log the URL being processed
+
     const response = await axios.get(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
@@ -25,31 +26,55 @@ app.post('/api/download', async (req, res) => {
 
     const $ = cheerio.load(response.data);
 
-    // Extract structured data from <script type="application/ld+json">
+    // Debugging: Log the first 500 characters of the HTML
+    console.log($.html().substring(0, 500));
+
+    // Try extracting metadata from structured JSON
     const scriptTag = $('script[type="application/ld+json"]').html();
-    if (!scriptTag) {
-      return res.status(404).json({ success: false, error: 'Unable to find media metadata.' });
+    let jsonData;
+    if (scriptTag) {
+      try {
+        jsonData = JSON.parse(scriptTag);
+        console.log('Parsed JSON Data:', jsonData); // Log the parsed JSON data
+      } catch (err) {
+        console.log('Error parsing JSON metadata:', err.message);
+      }
     }
 
-    const jsonData = JSON.parse(scriptTag);
-
-    // Determine type and extract URLs
+    // Check for video or image type in JSON metadata
     let type = 'unknown';
     let videoUrl = null;
     let imageUrl = null;
 
-    if (jsonData['@type'] === 'VideoObject') {
+    if (jsonData && jsonData['@type'] === 'VideoObject') {
       type = 'reel';
       videoUrl = jsonData.contentUrl;
-    } else if (jsonData['@type'] === 'ImageObject') {
+    } else if (jsonData && jsonData['@type'] === 'ImageObject') {
       type = 'post';
       imageUrl = jsonData.contentUrl;
     }
 
+    // Fallback to scraping meta tags for video/image URLs
     if (!videoUrl && !imageUrl) {
-      return res.status(404).json({ success: false, error: 'No media found for this URL.' });
+      const videoMetaTag = $('meta[property="og:video"]').attr('content');
+      const imageMetaTag = $('meta[property="og:image"]').attr('content');
+
+      if (videoMetaTag) {
+        type = 'reel';
+        videoUrl = videoMetaTag;
+      } else if (imageMetaTag) {
+        type = 'post';
+        imageUrl = imageMetaTag;
+      }
     }
 
+    // If no media found
+    if (!videoUrl && !imageUrl) {
+      console.log('No media found for this URL.');
+      return res.status(404).json({ success: false, error: 'Unable to find media metadata.' });
+    }
+
+    // Return the result
     return res.status(200).json({
       success: true,
       type,
