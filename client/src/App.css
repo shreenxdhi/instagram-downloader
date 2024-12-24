@@ -2,9 +2,7 @@
  * App.css
  */
 
-/* 
-  Reset & Base Styles
--------------------------------------------------- */
+/* Reset & base */
 * {
   margin: 0;
   padding: 0;
@@ -13,14 +11,11 @@
 
 html, body {
   height: 100%;
-  font-family: 'Poppins', sans-serif; 
+  font-family: 'Poppins', sans-serif; /* Or update as desired */
 }
 
-/* 
-  Animated Gradient Background
--------------------------------------------------- */
+/* Animated gradient */
 body {
-  /* Animated gradient background */
   background: linear-gradient(270deg, #ff6a6a, #ffc663, #81ff8b, #4deeee);
   background-size: 800% 800%;
   animation: bodyColorShift 20s ease infinite;
@@ -29,7 +24,6 @@ body {
   justify-content: center;
 }
 
-/* Keyframes for the gradient animation */
 @keyframes bodyColorShift {
   0% {
     background-position: 0% 50%;
@@ -42,19 +36,15 @@ body {
   }
 }
 
-/* 
-  Container
--------------------------------------------------- */
 .container {
   width: 90%;
   max-width: 600px;
   min-height: 450px;
-  background: #ffffffee; /* Slightly transparent white */
+  background: #ffffffee;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   padding: 30px;
   position: relative;
-  /* Fade-in animation for the container */
   opacity: 0;
   animation: fadeIn 1.2s ease forwards;
 }
@@ -65,9 +55,6 @@ body {
   }
 }
 
-/* 
-  Title Styling (Gradient Text)
--------------------------------------------------- */
 h1 {
   font-size: 2rem;
   text-align: center;
@@ -77,9 +64,7 @@ h1 {
   -webkit-text-fill-color: transparent;
 }
 
-/* 
-  Form Elements
--------------------------------------------------- */
+/* Form group & input */
 .form-group {
   margin-bottom: 15px;
 }
@@ -106,9 +91,7 @@ h1 {
   box-shadow: 0 0 5px rgba(236, 64, 122, 0.4);
 }
 
-/* 
-  Buttons
--------------------------------------------------- */
+/* Buttons */
 .button-group {
   display: flex;
   gap: 10px;
@@ -145,7 +128,6 @@ button:disabled {
   box-shadow: none;
 }
 
-/* Clear button styling */
 .clear-btn {
   background: #ccc;
   color: #333;
@@ -154,9 +136,7 @@ button:disabled {
   background: #aaa;
 }
 
-/* 
-  Result/Preview Area
--------------------------------------------------- */
+/* Result & media previews */
 .result {
   font-size: 1rem;
 }
@@ -165,19 +145,6 @@ button:disabled {
   margin-bottom: 10px;
 }
 
-.result a {
-  color: #ec407a;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.result a:hover {
-  text-decoration: underline;
-}
-
-/* 
-  Media Container (video & image)
--------------------------------------------------- */
 .media-container {
   margin-top: 1rem;
   text-align: center;
@@ -190,23 +157,19 @@ button:disabled {
   border: 2px solid #ec407a;
   border-radius: 6px;
   margin-bottom: 1rem;
-  object-fit: contain; /* prevents cropping */
+  object-fit: contain; /* ensures no cropping */
 }
 
-/* Download button for each media */
 .download-btn {
   background: #0072e5;
   border-radius: 20px;
   margin-top: 0.5rem;
 }
-
 .download-btn:hover {
   background: #005bb5;
 }
 
-/* 
-  Footer Styles
--------------------------------------------------- */
+/* Footer */
 footer {
   margin-top: 30px;
   text-align: center;
@@ -228,9 +191,7 @@ footer p {
   text-decoration: underline;
 }
 
-/* 
-  Responsive
--------------------------------------------------- */
+/* Responsive */
 @media (max-width: 480px) {
   .container {
     margin: 20px auto;
