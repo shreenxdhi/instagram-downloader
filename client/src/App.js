@@ -1,183 +1,80 @@
-import React, { useState } from 'react';
-import './App.css';
+import React, { useState } from "react";
+import axios from "axios";
+import "./App.css";
 
-function App() {
-  const [instaUrl, setInstaUrl] = useState('');
-  const [type, setType] = useState('');
-  const [videoUrl, setVideoUrl] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
-  const [loading, setLoading] = useState(false);
+// InstaVideo component to display video
+const InstaVideo = ({ data }) => {
+  return (
+    <video controls className="insta-video">
+      <source src={data} type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  );
+};
 
-  const downloadMedia = async (url, filename) => {
+const App = () => {
+  const [input, setInput] = useState(""); // For the Instagram link input
+  const [data, setData] = useState(""); // For the video URL
+  const [loader, setLoader] = useState(false); // To handle loading state
+  const [error, setError] = useState(""); // To handle error messages
+
+  // Function to fetch video/post data from the API
+  const getVideo = async () => {
+    const options = {
+      method: "GET",
+      url: import.meta.env.VITE_URL, // Environment variable for API URL
+      params: {
+        url: `${input}`, // Instagram URL entered by the user
+      },
+      headers: {
+        "X-RapidAPI-Key": import.meta.env.VITE_Rapid_Key, // RapidAPI Key
+        "X-RapidAPI-Host": import.meta.env.VITE_Rapid_Host, // RapidAPI Host
+      },
+    };
+
     try {
-      const response = await fetch(url);
-      const blob = await response.blob();
-      const link = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      setLoader(true);
+      const response = await axios.request(options);
+
+      // Extract the video/post URL from the response
+      setData(response?.data?.result[0]?.url);
+      setLoader(false);
+      setError(""); // Clear any previous error
     } catch (error) {
-      console.error('Error downloading media:', error.message);
-      setErrorMsg('Failed to download media. Please try again.');
-    }
-  };
-
-  const handleDownload = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setErrorMsg('');
-    setType('');
-    setVideoUrl('');
-    setImageUrl('');
-
-    if (!instaUrl.trim()) {
-      setErrorMsg('Please enter an Instagram URL.');
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const response = await fetch('/api/download', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: instaUrl }),
-      });
-
-      const data = await response.json();
-      if (!data.success) {
-        setErrorMsg(data.error || 'Error fetching media.');
+      setLoader(false);
+      // Handle errors gracefully
+      if (error.message === "Network Error") {
+        setError("Please check your internet connection.");
       } else {
-        setType(data.type || 'unknown');
-        setVideoUrl(data.videoUrl || '');
-        setImageUrl(data.imageUrl || '');
+        setError(error.response?.data?.message || "Something went wrong.");
       }
-    } catch (error) {
-      console.error('Error fetching media:', error.message);
-      setErrorMsg('Something went wrong. Please try again.');
-    } finally {
-      setLoading(false);
     }
-  };
-
-  const handleClear = () => {
-    setInstaUrl('');
-    setType('');
-    setVideoUrl('');
-    setImageUrl('');
-    setErrorMsg('');
-    setLoading(false);
   };
 
   return (
-    <div className="container">
-      <h1>Instagram Downloader</h1>
-      <form onSubmit={handleDownload}>
-        <div className="form-group">
-          <label htmlFor="insta-url">Paste Instagram Post/Reel URL</label>
-          <input
-            id="insta-url"
-            type="text"
-            placeholder="e.g. https://www.instagram.com/reel/..."
-            value={instaUrl}
-            onChange={(e) => setInstaUrl(e.target.value)}
-          />
-        </div>
-        <div className="button-group">
-          <button
-            type="submit"
-            disabled={loading}
-            className={loading ? 'loading-btn download-btn' : 'download-btn'}
-          >
-            {loading ? 'Downloading...' : 'Download'}
-          </button>
-          <button
-            type="button"
-            className="clear-btn"
-            onClick={handleClear}
-          >
-            Clear
-          </button>
-        </div>
-      </form>
-      <div className="result">
-        {errorMsg && <p style={{ color: 'red' }}>{errorMsg}</p>}
-        {type === 'reel' && videoUrl && (
-          <div>
-            <h3 className="preview-title">Reel Preview:</h3>
-            <video
-              className="insta-video"
-              controls
-              src={videoUrl}
-            >
-              Sorry, your browser doesn’t support embedded videos.
-            </video>
-            <button
-              className="download-btn"
-              onClick={() => downloadMedia(videoUrl, 'instagram-reel.mp4')}
-            >
-              Download Reel
-            </button>
-          </div>
-        )}
-        {type === 'post' && imageUrl && (
-          <div>
-            <h3 className="preview-title">Post Preview:</h3>
-            <img
-              className="insta-image"
-              src={imageUrl}
-              alt="Instagram Post"
-            />
-            <button
-              className="download-btn"
-              onClick={() => downloadMedia(imageUrl, 'instagram-post.jpg')}
-            >
-              Download Image
-            </button>
-          </div>
+    <>
+      <div className="main">
+        <h1>Instagram Downloader</h1>
+        <input
+          placeholder="Paste Instagram Post/Reel Link"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          type="url"
+          className="input-box"
+        />
+        <button onClick={getVideo} className="download-btn" disabled={loader}>
+          {loader ? "Loading..." : "Download"}
+        </button>
+      </div>
+      <div className="videoContainer">
+        {data ? (
+          <InstaVideo data={data} />
+        ) : (
+          error && <h3 className="error">{error}</h3>
         )}
       </div>
-      <footer>
-        <p>Made with ❤️ by Shreenidhi Vasishta</p>
-        <div className="social-icons">
-          <a
-            href="https://facebook.com/sharer/sharer.php?u=https://instagram-downloader-r6x6.onrender.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Share on Facebook"
-          >
-            <i className="fab fa-facebook"></i>
-          </a>
-          <a
-            href="https://twitter.com/intent/tweet?url=https://instagram-downloader-r6x6.onrender.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Share on Twitter"
-          >
-            <i className="fab fa-twitter"></i>
-          </a>
-          <a
-            href="https://wa.me/?text=Check%20out%20this%20Instagram%20Downloader:%20https://instagram-downloader-r6x6.onrender.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Share on WhatsApp"
-          >
-            <i className="fab fa-whatsapp"></i>
-          </a>
-          <a
-            href="https://www.instagram.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Visit Instagram"
-          >
-            <i className="fab fa-instagram"></i>
-          </a>
-        </div>
-      </footer>
-    </div>
+    </>
   );
-}
+};
 
 export default App;
