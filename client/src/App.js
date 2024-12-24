@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import './App.css';
+import { FaFacebook, FaTwitter, FaWhatsapp, FaInstagram } from 'react-icons/fa';
 
 function App() {
   const [instaUrl, setInstaUrl] = useState('');
+  const [type, setType] = useState('');
   const [videoUrl, setVideoUrl] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Force a file download
+  // Function to download media
   const downloadFile = (url, filename) => {
     const link = document.createElement('a');
     link.href = url;
@@ -18,11 +20,12 @@ function App() {
     document.body.removeChild(link);
   };
 
-  // Handle the "Download" button
+  // Handle form submission
   const handleDownload = async (e) => {
     e.preventDefault();
     setLoading(true);
     setErrorMsg('');
+    setType('');
     setVideoUrl('');
     setImageUrl('');
 
@@ -41,26 +44,24 @@ function App() {
       const data = await response.json();
 
       if (!data.success) {
-        setErrorMsg(data.error || 'Error downloading media.');
+        setErrorMsg(data.error || 'Error fetching media.');
       } else {
-        if (data.videoUrl) {
-          setVideoUrl(data.videoUrl);
-        }
-        if (data.imageUrl) {
-          setImageUrl(data.imageUrl);
-        }
+        setType(data.type || 'unknown');
+        setVideoUrl(data.videoUrl || '');
+        setImageUrl(data.imageUrl || '');
       }
     } catch (error) {
-      console.error(error);
-      setErrorMsg('Something went wrong. Please try again.');
+      console.error('Error fetching media:', error);
+      setErrorMsg('Something went wrong. Please try again later.');
     } finally {
       setLoading(false);
     }
   };
 
-  // Clear input/results
+  // Clear input and results
   const handleClear = () => {
     setInstaUrl('');
+    setType('');
     setVideoUrl('');
     setImageUrl('');
     setErrorMsg('');
@@ -77,7 +78,7 @@ function App() {
           <input
             id="insta-url"
             type="text"
-            placeholder="e.g. https://www.instagram.com/p/XXXXXXXXX/"
+            placeholder="e.g. https://www.instagram.com/reel/..."
             value={instaUrl}
             onChange={(e) => setInstaUrl(e.target.value)}
           />
@@ -96,65 +97,76 @@ function App() {
       <div className="result">
         {errorMsg && <p style={{ color: 'red' }}>{errorMsg}</p>}
 
-        {/* Video preview & download */}
-        {videoUrl && (
+        {/* Handle Reels */}
+        {type === 'reel' && videoUrl && (
           <div className="media-container">
-            <h3>Video Preview:</h3>
+            <h3>Reel Preview:</h3>
             <video className="insta-video" controls src={videoUrl}>
-              Sorry, your browser doesn't support embedded videos.
+              Sorry, your browser doesn’t support embedded videos.
             </video>
             <button
               className="download-btn"
-              onClick={() => downloadFile(videoUrl, 'instagram-video.mp4')}
+              onClick={() => downloadFile(videoUrl, 'instagram-reel.mp4')}
             >
-              Download Video
+              Download Reel
             </button>
           </div>
         )}
 
-        {/* If no video, but we have imageUrl */}
-        {!videoUrl && imageUrl && (
+        {/* Handle Posts */}
+        {type === 'post' && imageUrl && (
           <div className="media-container">
-            <h3>Image Preview:</h3>
-            <img className="insta-image" src={imageUrl} alt="Instagram content" />
+            <h3>Post Preview:</h3>
+            <img className="insta-image" src={imageUrl} alt="Instagram Post" />
             <button
               className="download-btn"
-              onClick={() => downloadFile(imageUrl, 'instagram-image.jpg')}
+              onClick={() => downloadFile(imageUrl, 'instagram-post.jpg')}
             >
               Download Image
             </button>
           </div>
         )}
+
+        {/* Unknown Type */}
+        {type === 'unknown' && (
+          <p style={{ color: 'orange' }}>Unable to determine the type of content.</p>
+        )}
       </div>
 
-      {/* FOOTER */}
       <footer>
         <p>Made with ❤️ by Shreenidhi Vasishta</p>
-        <p>Share this tool:</p>
         <div className="social-icons">
-          {/* Change these links to match your final domain if needed */}
           <a
             href="https://facebook.com/sharer/sharer.php?u=https://instagram-downloader-3qi2.onrender.com"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Share on Facebook"
           >
-            Facebook
+            <FaFacebook size={24} />
           </a>
-          {' | '}
           <a
             href="https://twitter.com/intent/tweet?url=https://instagram-downloader-3qi2.onrender.com"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Share on Twitter"
           >
-            Twitter
+            <FaTwitter size={24} />
           </a>
-          {' | '}
           <a
-            href="https://wa.me/?text=Check%20out%20this%20Instagram%20Downloader%20by%20Shreenidhi%20Vasishta:%20https://instagram-downloader-3qi2.onrender.com"
+            href="https://wa.me/?text=Check%20out%20this%20Instagram%20Downloader:%20https://instagram-downloader-3qi2.onrender.com"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Share on WhatsApp"
           >
-            WhatsApp
+            <FaWhatsapp size={24} />
+          </a>
+          <a
+            href="https://www.instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Share on Instagram"
+          >
+            <FaInstagram size={24} />
           </a>
         </div>
       </footer>
