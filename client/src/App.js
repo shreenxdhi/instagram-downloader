@@ -10,14 +10,21 @@ function App() {
   const [errorMsg, setErrorMsg] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Function to download media
-  const downloadFile = (url, filename) => {
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', filename);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  // Function to download media directly
+  const downloadMedia = async (url, filename) => {
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Error downloading media:', error);
+      setErrorMsg('Failed to download media. Please try again.');
+    }
   };
 
   // Handle form submission
@@ -106,7 +113,7 @@ function App() {
             </video>
             <button
               className="download-btn"
-              onClick={() => downloadFile(videoUrl, 'instagram-reel.mp4')}
+              onClick={() => downloadMedia(videoUrl, 'instagram-reel.mp4')}
             >
               Download Reel
             </button>
@@ -120,7 +127,7 @@ function App() {
             <img className="insta-image" src={imageUrl} alt="Instagram Post" />
             <button
               className="download-btn"
-              onClick={() => downloadFile(imageUrl, 'instagram-post.jpg')}
+              onClick={() => downloadMedia(imageUrl, 'instagram-post.jpg')}
             >
               Download Image
             </button>
@@ -164,7 +171,7 @@ function App() {
             href="https://www.instagram.com"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Share on Instagram"
+            aria-label="Visit Instagram"
           >
             <FaInstagram size={24} />
           </a>
