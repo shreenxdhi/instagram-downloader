@@ -1,21 +1,107 @@
-/* General container for the app */
-.container {
-  max-width: 800px;
-  margin: 50px auto;
+/* Main container styling */
+.main {
   text-align: center;
-  padding: 20px;
-  border-radius: 15px;
-  background: linear-gradient(to right, #ffecd2, #fcb69f); /* Gradient background */
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
-  font-family: 'Arial', sans-serif;
-  animation: fadeIn 1s ease-in-out;
+  margin-top: 50px;
 }
 
-/* Fade-in animation for the container */
+/* Input box styling */
+.input-box {
+  padding: 10px;
+  width: 70%;
+  font-size: 1rem;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  margin-right: 10px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.input-box:hover {
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+
+.input-box:focus {
+  border-color: #0056b3;
+  box-shadow: 0 0 10px rgba(0, 86, 179, 0.8);
+}
+
+/* Download button styling */
+.download-btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.download-btn:hover {
+  background-color: #0056b3;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+
+.download-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Clear button styling */
+.clear-btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.clear-btn:hover {
+  background-color: #5a6268;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+
+/* Video container */
+.videoContainer {
+  margin-top: 30px;
+  text-align: center;
+}
+
+/* Video styling */
+.insta-video {
+  max-width: 90%;
+  height: auto;
+  border: 3px solid #007bff;
+  border-radius: 10px;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.insta-video:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Error message styling */
+.error {
+  color: red;
+  font-size: 1.2rem;
+}
+
+/* Fade-in animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-20px);
   }
   to {
     opacity: 1;
@@ -23,163 +109,9 @@
   }
 }
 
-/* Title styles */
-h1 {
-  font-size: 2.8rem;
-  margin-bottom: 20px;
-  background: linear-gradient(to right, #ff8a00, #e52e71); /* Gradient text */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: bounceIn 1s ease-in-out;
-}
-
-/* Bounce-in animation for title */
-@keyframes bounceIn {
-  from {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-/* Form styles */
-.form-group {
-  margin-bottom: 20px;
-}
-
-input[type="text"] {
-  width: 90%;
-  padding: 10px;
-  font-size: 1rem;
-  border: 2px solid #ec407a;
-  border-radius: 10px;
-  outline: none;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-input[type="text"]:focus {
-  border-color: #ff8a00;
-  box-shadow: 0 0 10px rgba(255, 138, 0, 0.5);
-}
-
-/* Button group */
-.button-group {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-}
-
-button {
-  font-size: 1.2rem;
-  padding: 10px 25px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-.download-btn {
-  background-color: #007bff;
-  color: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-.download-btn:hover {
-  transform: scale(1.05);
-  background-color: #0056b3;
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
-}
-
-.clear-btn {
-  background-color: #6c757d;
-  color: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-.clear-btn:hover {
-  transform: scale(1.05);
-  background-color: #5a6268;
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
-}
-
-/* Result container */
-.result {
-  margin-top: 20px;
-  animation: fadeIn 1s ease-in-out;
-}
-
-.result h3 {
-  font-size: 1.6rem;
-  margin-bottom: 15px;
-  color: #333;
-  text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
-}
-
-/* Post styles (Instagram sizes) */
-.insta-image {
-  display: block;
-  margin: 20px auto;
-  border-radius: 12px;
-  border: 3px solid #ec407a;
-  width: auto;
-  max-width: 100%; /* Fit within the container */
-  height: auto;
-  aspect-ratio: 1 / 1; /* Default to square (1:1) */
-  object-fit: cover;
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Add a shadow for better visibility */
-  transition: transform 0.3s ease;
-}
-
-.insta-image:hover {
-  transform: scale(1.02);
-}
-
-/* Reel styles (Instagram sizes) */
-.insta-video {
-  display: block;
-  margin: 20px auto;
-  border-radius: 12px;
-  border: 3px solid #ff8a00;
-  width: 100%;
-  max-width: 540px; /* Reels are typically shown with a 9:16 aspect ratio */
-  height: auto;
-  aspect-ratio: 9 / 16; /* Ensure it mimics Instagram's vertical reel size */
-  object-fit: cover;
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease;
-}
-
-.insta-video:hover {
-  transform: scale(1.02);
-}
-
-/* Footer styles */
-footer {
-  margin-top: 40px;
-  font-size: 0.9rem;
-  color: #555;
-}
-
-footer p {
-  margin: 0;
-  color: #555;
-}
-
 /* Social icons */
-.social-icons {
-  margin-top: 10px;
-}
-
 .social-icons a {
-  color: #ec407a;
+  color: #007bff;
   margin: 0 10px;
   font-size: 24px;
   text-decoration: none;
@@ -188,5 +120,5 @@ footer p {
 
 .social-icons a:hover {
   transform: scale(1.1);
-  color: #f06292;
+  color: #0056b3;
 }
