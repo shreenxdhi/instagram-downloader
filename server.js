@@ -1,3 +1,6 @@
+/**
+ * server.js
+ */
 const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
@@ -11,10 +14,8 @@ app.use(express.json());
 
 // ---------------------------------------------------------------------
 // POST /api/download
-// ---------------------------------------------------------------------
 // Body: { url: 'https://www.instagram.com/.../' }
-// Returns:
-//   { success: true, videoUrl, imageUrl } or { success: false, error }
+// Returns: { success: true, videoUrl, imageUrl } or { success: false, error }
 // ---------------------------------------------------------------------
 app.post('/api/download', async (req, res) => {
   try {
@@ -36,7 +37,7 @@ app.post('/api/download', async (req, res) => {
 
     const $ = cheerio.load(response.data);
 
-    // 1. Attempt to extract video or image from standard OG tags
+    // 1. Attempt to extract video or image from standard Open Graph tags
     let videoUrl =
       $('meta[property="og:video:secure_url"]').attr('content') ||
       $('meta[property="og:video"]').attr('content') ||
@@ -47,7 +48,7 @@ app.post('/api/download', async (req, res) => {
     if (!videoUrl) {
       const scriptTag = $('script')
         .filter((i, el) => {
-          // Look for the script that starts with "window._sharedData"
+          // Look for script that starts with "window._sharedData"
           return $(el).html().trim().startsWith('window._sharedData');
         })
         .first()
@@ -63,18 +64,17 @@ app.post('/api/download', async (req, res) => {
           // Parse the JSON to access the media details
           const dataObj = JSON.parse(jsonStr);
 
-          // Typically, we find the media URL under:
+          // Typically, we find the media under:
           // dataObj.entry_data.PostPage[0].graphql.shortcode_media
           const postPage = dataObj?.entry_data?.PostPage?.[0]?.graphql?.shortcode_media;
           if (postPage) {
             // If the post is a video or a reel, 'video_url' may exist
             videoUrl = postPage.video_url || null;
-            // If we didn't get an image from OG tags, try fallback to 'display_url'
-            imageUrl = imageUrl || postPage.display_url || null;
 
-            // If it's a multi-photo or multi-video carousel:
-            // you might need to parse postPage.edge_sidecar_to_children.edges
-            // for multiple media items.
+            // If we didn't get an image from OG tags, try display_url
+            if (!imageUrl) {
+              imageUrl = postPage.display_url || null;
+            }
           }
         } catch (err) {
           console.error('JSON parse error:', err);
@@ -105,7 +105,7 @@ app.post('/api/download', async (req, res) => {
   }
 });
 
-// Serve React in production
+// Serve the React build in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client', 'build')));
   app.get('*', (req, res) => {
@@ -113,7 +113,6 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
