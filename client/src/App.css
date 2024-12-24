@@ -1,3 +1,7 @@
+/**
+ * client/src/App.css
+ */
+
 /* 
   Reset & Base Styles
 -------------------------------------------------- */
@@ -9,7 +13,7 @@
 
 html, body {
   height: 100%;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif; /* optional if you load Poppins in index.html */
 }
 
 /* 
@@ -43,13 +47,12 @@ body {
 .container {
   width: 90%;
   max-width: 600px;
-  min-height: 400px;
+  min-height: 450px;
   background: #ffffffee; /* Slightly transparent white */
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   padding: 30px;
   position: relative;
-  /* Fade-in animation for the container */
   opacity: 0;
   animation: fadeIn 1.2s ease forwards;
 }
@@ -76,7 +79,7 @@ h1 {
   Form Elements
 -------------------------------------------------- */
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .form-group label {
@@ -102,8 +105,14 @@ h1 {
 }
 
 /* 
-  Button Styles (with hover & active animations)
+  Buttons
 -------------------------------------------------- */
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
 button {
   display: inline-block;
   padding: 12px 24px;
@@ -134,11 +143,21 @@ button:disabled {
   box-shadow: none;
 }
 
+/* Distinguish the "Clear" button visually if you want */
+.clear-btn {
+  background: #ccc;
+  color: #333;
+}
+
+.clear-btn:hover {
+  background: #aaa;
+  transform: translateY(-1px);
+}
+
 /* 
   Result area
 -------------------------------------------------- */
 .result {
-  margin-top: 20px;
   font-size: 1rem;
 }
 
@@ -170,12 +189,18 @@ button:disabled {
   height: auto;
   border: 2px solid #ec407a;
   border-radius: 6px;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  object-fit: contain;
 }
 
-/* For images specifically, ensure the entire image shows if aspect ratio is unusual */
-.insta-image {
-  object-fit: contain;
+/* Download Button for each media preview */
+.download-btn {
+  background: #0072e5;
+  border-radius: 20px;
+}
+
+.download-btn:hover {
+  background: #005bb5;
 }
 
 /* 
