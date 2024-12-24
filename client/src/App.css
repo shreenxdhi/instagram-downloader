@@ -4,43 +4,43 @@
   margin: 50px auto;
   text-align: center;
   padding: 20px;
-  border-radius: 10px;
-  background: linear-gradient(to right, #fbc2eb, #a6c1ee); /* Gradient background */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  background: linear-gradient(to right, #ffecd2, #fcb69f); /* Gradient background */
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
   font-family: 'Arial', sans-serif;
   animation: fadeIn 1s ease-in-out;
 }
 
-/* Fade-in animation */
+/* Fade-in animation for the container */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: scale(0.9);
+    transform: translateY(-10px);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0);
   }
 }
 
 /* Title styles */
 h1 {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   margin-bottom: 20px;
   background: linear-gradient(to right, #ff8a00, #e52e71); /* Gradient text */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: slideIn 1s ease-in-out;
+  animation: bounceIn 1s ease-in-out;
 }
 
-/* Slide-in animation */
-@keyframes slideIn {
+/* Bounce-in animation for title */
+@keyframes bounceIn {
   from {
-    transform: translateY(-20px);
+    transform: scale(0.8);
     opacity: 0;
   }
   to {
-    transform: translateY(0);
+    transform: scale(1);
     opacity: 1;
   }
 }
@@ -55,13 +55,14 @@ input[type="text"] {
   padding: 10px;
   font-size: 1rem;
   border: 2px solid #ec407a;
-  border-radius: 5px;
+  border-radius: 10px;
   outline: none;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 input[type="text"]:focus {
   border-color: #ff8a00;
+  box-shadow: 0 0 10px rgba(255, 138, 0, 0.5);
 }
 
 /* Button group */
@@ -72,12 +73,12 @@ input[type="text"]:focus {
 }
 
 button {
-  font-size: 1rem;
-  padding: 10px 20px;
+  font-size: 1.2rem;
+  padding: 10px 25px;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: transform 0.3s ease, background-color 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 button:disabled {
@@ -88,63 +89,83 @@ button:disabled {
 .download-btn {
   background-color: #007bff;
   color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .download-btn:hover {
   transform: scale(1.05);
   background-color: #0056b3;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
 }
 
 .clear-btn {
   background-color: #6c757d;
   color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .clear-btn:hover {
   transform: scale(1.05);
   background-color: #5a6268;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
 }
 
 /* Result container */
 .result {
   margin-top: 20px;
+  animation: fadeIn 1s ease-in-out;
 }
 
 .result h3 {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   margin-bottom: 15px;
+  color: #333;
+  text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-/* Media styles */
-.insta-image,
+/* Post styles (Instagram sizes) */
+.insta-image {
+  display: block;
+  margin: 20px auto;
+  border-radius: 12px;
+  border: 3px solid #ec407a;
+  width: auto;
+  max-width: 100%; /* Fit within the container */
+  height: auto;
+  aspect-ratio: 1 / 1; /* Default to square (1:1) */
+  object-fit: cover;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Add a shadow for better visibility */
+  transition: transform 0.3s ease;
+}
+
+.insta-image:hover {
+  transform: scale(1.02);
+}
+
+/* Reel styles (Instagram sizes) */
 .insta-video {
   display: block;
   margin: 20px auto;
-  border-radius: 8px;
-  border: 2px solid #ec407a;
-  width: auto; /* Maintain the original width */
-  height: auto; /* Maintain the original height */
-  max-width: 100%; /* Fit within the container width */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Add a shadow for better visibility */
-  animation: popUp 0.5s ease-in-out;
+  border-radius: 12px;
+  border: 3px solid #ff8a00;
+  width: 100%;
+  max-width: 540px; /* Reels are typically shown with a 9:16 aspect ratio */
+  height: auto;
+  aspect-ratio: 9 / 16; /* Ensure it mimics Instagram's vertical reel size */
+  object-fit: cover;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
 }
 
-/* Pop-up animation for media */
-@keyframes popUp {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+.insta-video:hover {
+  transform: scale(1.02);
 }
 
 /* Footer styles */
 footer {
   margin-top: 40px;
   font-size: 0.9rem;
+  color: #555;
 }
 
 footer p {
