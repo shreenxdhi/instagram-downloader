@@ -21,7 +21,7 @@ function App() {
       document.body.removeChild(link);
     } catch (error) {
       console.error('Error downloading media:', error.message);
-      setErrorMsg('Failed to download media.');
+      setErrorMsg('Failed to download media. Please try again.');
     }
   };
 
@@ -103,7 +103,7 @@ function App() {
               className="insta-video"
               controls
               src={videoUrl}
-              style={{ width: 'auto', height: 'auto', display: 'block', margin: '0 auto' }}
+              style={{ display: 'block', margin: '20px auto' }}
             >
               Sorry, your browser doesn’t support embedded videos.
             </video>
@@ -122,7 +122,7 @@ function App() {
               className="insta-image"
               src={imageUrl}
               alt="Instagram Post"
-              style={{ width: 'auto', height: 'auto', display: 'block', margin: '0 auto' }}
+              style={{ display: 'block', margin: '20px auto' }}
             />
             <button
               className="download-btn"
@@ -133,6 +133,43 @@ function App() {
           </div>
         )}
       </div>
+      <footer>
+        <p>Made with ❤️ by Shreenidhi Vasishta</p>
+        <div className="social-icons">
+          <a
+            href="https://facebook.com/sharer/sharer.php?u=https://instagram-downloader-r6x6.onrender.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Share on Facebook"
+          >
+            <i className="fab fa-facebook"></i>
+          </a>
+          <a
+            href="https://twitter.com/intent/tweet?url=https://instagram-downloader-r6x6.onrender.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Share on Twitter"
+          >
+            <i className="fab fa-twitter"></i>
+          </a>
+          <a
+            href="https://wa.me/?text=Check%20out%20this%20Instagram%20Downloader:%20https://instagram-downloader-r6x6.onrender.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Share on WhatsApp"
+          >
+            <i className="fab fa-whatsapp"></i>
+          </a>
+          <a
+            href="https://www.instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit Instagram"
+          >
+            <i className="fab fa-instagram"></i>
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }
