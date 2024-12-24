@@ -1,5 +1,5 @@
 /**
- * client/src/App.css
+ * App.css
  */
 
 /* 
@@ -13,7 +13,7 @@
 
 html, body {
   height: 100%;
-  font-family: 'Poppins', sans-serif; /* optional if you load Poppins in index.html */
+  font-family: 'Poppins', sans-serif; 
 }
 
 /* 
@@ -21,7 +21,7 @@ html, body {
 -------------------------------------------------- */
 body {
   /* Animated gradient background */
-  background: linear-gradient(270deg, #FF6A6A, #FFC663, #81FF8B, #4DEEEE);
+  background: linear-gradient(270deg, #ff6a6a, #ffc663, #81ff8b, #4deeee);
   background-size: 800% 800%;
   animation: bodyColorShift 20s ease infinite;
   display: flex;
@@ -29,6 +29,7 @@ body {
   justify-content: center;
 }
 
+/* Keyframes for the gradient animation */
 @keyframes bodyColorShift {
   0% {
     background-position: 0% 50%;
@@ -53,6 +54,7 @@ body {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   padding: 30px;
   position: relative;
+  /* Fade-in animation for the container */
   opacity: 0;
   animation: fadeIn 1.2s ease forwards;
 }
@@ -64,7 +66,7 @@ body {
 }
 
 /* 
-  Title Styling (with gradient text)
+  Title Styling (Gradient Text)
 -------------------------------------------------- */
 h1 {
   font-size: 2rem;
@@ -143,19 +145,17 @@ button:disabled {
   box-shadow: none;
 }
 
-/* Distinguish the "Clear" button visually if you want */
+/* Clear button styling */
 .clear-btn {
   background: #ccc;
   color: #333;
 }
-
 .clear-btn:hover {
   background: #aaa;
-  transform: translateY(-1px);
 }
 
 /* 
-  Result area
+  Result/Preview Area
 -------------------------------------------------- */
 .result {
   font-size: 1rem;
@@ -190,13 +190,14 @@ button:disabled {
   border: 2px solid #ec407a;
   border-radius: 6px;
   margin-bottom: 1rem;
-  object-fit: contain;
+  object-fit: contain; /* prevents cropping */
 }
 
-/* Download Button for each media preview */
+/* Download button for each media */
 .download-btn {
   background: #0072e5;
   border-radius: 20px;
+  margin-top: 0.5rem;
 }
 
 .download-btn:hover {
@@ -204,7 +205,31 @@ button:disabled {
 }
 
 /* 
-  Responsive Media Query
+  Footer Styles
+-------------------------------------------------- */
+footer {
+  margin-top: 30px;
+  text-align: center;
+}
+
+footer p {
+  margin-bottom: 10px;
+  color: #444;
+}
+
+.social-icons a {
+  color: #ec407a;
+  text-decoration: none;
+  font-weight: 600;
+  margin: 0 5px;
+}
+
+.social-icons a:hover {
+  text-decoration: underline;
+}
+
+/* 
+  Responsive
 -------------------------------------------------- */
 @media (max-width: 480px) {
   .container {
