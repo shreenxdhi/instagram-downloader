@@ -1,6 +1,3 @@
-/**
- * client/src/App.js
- */
 import React, { useState } from 'react';
 import './App.css';
 
@@ -11,21 +8,16 @@ function App() {
   const [errorMsg, setErrorMsg] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // -------------------------
-  // Download File Helpers
-  // -------------------------
-  const downloadFile = (fileUrl, fileName) => {
+  // Force a file download in the browser
+  const downloadFile = (url, filename) => {
     const link = document.createElement('a');
-    link.href = fileUrl;
-    link.setAttribute('download', fileName);
+    link.href = url;
+    link.setAttribute('download', filename);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
-  // -------------------------
-  // Handle Form Submission
-  // -------------------------
   const handleDownload = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -43,10 +35,10 @@ function App() {
       const response = await fetch('/api/download', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: instaUrl }),
+        body: JSON.stringify({ url: instaUrl })
       });
-
       const data = await response.json();
+
       if (!data.success) {
         setErrorMsg(data.error || 'Error downloading media.');
       } else {
@@ -65,9 +57,7 @@ function App() {
     }
   };
 
-  // -------------------------
-  // Clear the Input and Results
-  // -------------------------
+  // Clear form & results
   const handleClear = () => {
     setInstaUrl('');
     setVideoUrl('');
@@ -105,7 +95,7 @@ function App() {
       <div className="result">
         {errorMsg && <p style={{ color: 'red' }}>{errorMsg}</p>}
 
-        {/* VIDEO PREVIEW & DOWNLOAD BUTTON */}
+        {/* If a video is found, show <video> preview & Download button */}
         {videoUrl && (
           <div className="media-container">
             <h3>Video Preview:</h3>
@@ -113,16 +103,16 @@ function App() {
               Sorry, your browser doesn't support embedded videos.
             </video>
             <button
-              onClick={() => downloadFile(videoUrl, 'instagram-video.mp4')}
               className="download-btn"
+              onClick={() => downloadFile(videoUrl, 'instagram-video.mp4')}
             >
               Download Video
             </button>
           </div>
         )}
 
-        {/* IMAGE PREVIEW & DOWNLOAD BUTTON */}
-        {imageUrl && (
+        {/* If no video but an image is found, show <img> preview & Download button */}
+        {!videoUrl && imageUrl && (
           <div className="media-container">
             <h3>Image Preview:</h3>
             <img
@@ -131,14 +121,45 @@ function App() {
               alt="Instagram content"
             />
             <button
-              onClick={() => downloadFile(imageUrl, 'instagram-image.jpg')}
               className="download-btn"
+              onClick={() => downloadFile(imageUrl, 'instagram-image.jpg')}
             >
               Download Image
             </button>
           </div>
         )}
       </div>
+
+      {/*  FOOTER SECTION  */}
+      <footer>
+        <p>Made with ❤️ by Shreenidhi Vasishta</p>
+        <p>Share this tool:</p>
+        <div className="social-icons">
+          <a
+            href="https://facebook.com/sharer/sharer.php?u=https://instagram-downloader-rmbp.onrender.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Facebook
+          </a>
+          {' | '}
+          <a
+            href="https://twitter.com/intent/tweet?url=https://instagram-downloader-rmbp.onrender.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Twitter
+          </a>
+          {' | '}
+          <a
+            href="https://wa.me/?text=Check%20out%20this%20Instagram%20Downloader%20by%20Shreenidhi%20Vasishta:%20https://instagram-downloader-rmbp.onrender.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            WhatsApp
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }
