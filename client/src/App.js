@@ -93,7 +93,11 @@ function App() {
           >
             {loading ? 'Downloading...' : 'Download'}
           </button>
-          <button type="button" className="clear-btn" onClick={handleClear}>
+          <button
+            type="button"
+            className="clear-btn"
+            onClick={handleClear}
+          >
             Clear
           </button>
         </div>
@@ -107,13 +111,6 @@ function App() {
               className="insta-video"
               controls
               src={videoUrl}
-              style={{
-                display: 'block',
-                margin: '20px auto',
-                border: '2px solid #ff8a00',
-                borderRadius: '10px',
-                boxShadow: '0px 4px 8px rgba(0,0,0,0.2)',
-              }}
             >
               Sorry, your browser doesn’t support embedded videos.
             </video>
@@ -132,13 +129,6 @@ function App() {
               className="insta-image"
               src={imageUrl}
               alt="Instagram Post"
-              style={{
-                display: 'block',
-                margin: '20px auto',
-                border: '2px solid #ff8a00',
-                borderRadius: '10px',
-                boxShadow: '0px 4px 8px rgba(0,0,0,0.2)',
-              }}
             />
             <button
               className="download-btn"
