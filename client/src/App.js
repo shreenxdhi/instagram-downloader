@@ -86,7 +86,11 @@ function App() {
           />
         </div>
         <div className="button-group">
-          <button type="submit" disabled={loading}>
+          <button
+            type="submit"
+            disabled={loading}
+            className={loading ? 'loading-btn download-btn' : 'download-btn'}
+          >
             {loading ? 'Downloading...' : 'Download'}
           </button>
           <button type="button" className="clear-btn" onClick={handleClear}>
@@ -98,12 +102,18 @@ function App() {
         {errorMsg && <p style={{ color: 'red' }}>{errorMsg}</p>}
         {type === 'reel' && videoUrl && (
           <div>
-            <h3>Reel Preview:</h3>
+            <h3 className="preview-title">Reel Preview:</h3>
             <video
               className="insta-video"
               controls
               src={videoUrl}
-              style={{ display: 'block', margin: '20px auto' }}
+              style={{
+                display: 'block',
+                margin: '20px auto',
+                border: '2px solid #ff8a00',
+                borderRadius: '10px',
+                boxShadow: '0px 4px 8px rgba(0,0,0,0.2)',
+              }}
             >
               Sorry, your browser doesn’t support embedded videos.
             </video>
@@ -117,12 +127,18 @@ function App() {
         )}
         {type === 'post' && imageUrl && (
           <div>
-            <h3>Post Preview:</h3>
+            <h3 className="preview-title">Post Preview:</h3>
             <img
               className="insta-image"
               src={imageUrl}
               alt="Instagram Post"
-              style={{ display: 'block', margin: '20px auto' }}
+              style={{
+                display: 'block',
+                margin: '20px auto',
+                border: '2px solid #ff8a00',
+                borderRadius: '10px',
+                boxShadow: '0px 4px 8px rgba(0,0,0,0.2)',
+              }}
             />
             <button
               className="download-btn"
