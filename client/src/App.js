@@ -137,7 +137,7 @@ function App() {
         <p>Made with ❤️ by Shreenidhi Vasishta</p>
         <div className="social-icons">
           <a
-            href="https://facebook.com/sharer/sharer.php?u=https://instagram-downloader-3qi2.onrender.com"
+            href="https://facebook.com/sharer/sharer.php?u=https://instagram-downloader-r6x6.onrender.com"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Share on Facebook"
@@ -145,7 +145,7 @@ function App() {
             <FaFacebook size={24} />
           </a>
           <a
-            href="https://twitter.com/intent/tweet?url=https://instagram-downloader-3qi2.onrender.com"
+            href="https://twitter.com/intent/tweet?url=https://instagram-downloader-r6x6.onrender.com"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Share on Twitter"
@@ -153,7 +153,7 @@ function App() {
             <FaTwitter size={24} />
           </a>
           <a
-            href="https://wa.me/?text=Check%20out%20this%20Instagram%20Downloader:%20https://instagram-downloader-3qi2.onrender.com"
+            href="https://wa.me/?text=Check%20out%20this%20Instagram%20Downloader:%20https://instagram-downloader-r6x6.onrender.com"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Share on WhatsApp"
