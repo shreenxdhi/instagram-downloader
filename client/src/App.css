@@ -1,207 +1,125 @@
-/**
- * App.css
- */
-
-/* General Reset & Base Styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html, body {
-  height: 100%;
-  font-family: 'Poppins', sans-serif;
-}
-
-/* Background Animation */
-body {
-  background: linear-gradient(270deg, #ff6a6a, #ffc663, #81ff8b, #4deeee);
-  background-size: 800% 800%;
-  animation: bodyColorShift 20s ease infinite;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@keyframes bodyColorShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-/* Container Styling */
+/* General container for the app */
 .container {
-  width: 90%;
   max-width: 600px;
-  background: #ffffffee;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  padding: 30px;
-  position: relative;
-  animation: fadeIn 1.2s ease forwards;
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
-}
-
-h1 {
-  font-size: 2rem;
+  margin: 50px auto;
   text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+  background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+}
+
+/* Title styles */
+h1 {
+  font-size: 2.5rem;
   margin-bottom: 20px;
-  background: linear-gradient(45deg, #ec407a, #fbc02d, #66bb6a);
+  background: linear-gradient(to right, #ff8a00, #e52e71);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Form & Input Styling */
+/* Form styles */
 .form-group {
-  margin-bottom: 15px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 600;
-  color: #444;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 10px 12px;
-  font-size: 1rem;
-  border: 2px solid #ccc;
-  border-radius: 6px;
-  transition: border 0.3s, box-shadow 0.3s;
-}
-
-.form-group input:focus {
-  outline: none;
-  border-color: #ec407a;
-  box-shadow: 0 0 5px rgba(236, 64, 122, 0.4);
-}
-
-/* Button Styling */
-.button-group {
-  display: flex;
-  gap: 10px;
   margin-bottom: 20px;
 }
 
-button {
-  padding: 12px 24px;
-  background: #ec407a;
-  color: #fff;
+input[type="text"] {
+  width: 90%;
+  padding: 10px;
   font-size: 1rem;
-  font-weight: 500;
+  border: 2px solid #ec407a;
+  border-radius: 5px;
+  outline: none;
+}
+
+input[type="text"]:focus {
+  border-color: #ff8a00;
+}
+
+/* Button group */
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+button {
+  font-size: 1rem;
+  padding: 10px 20px;
   border: none;
-  border-radius: 25px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-}
-
-button:hover {
-  transform: translateY(-3px);
-  background: #d81b60;
-  box-shadow: 0 8px 20px rgba(216, 27, 96, 0.3);
-}
-
-button:active {
-  transform: scale(0.95);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 button:disabled {
-  background: #bbb;
+  background-color: #ccc;
   cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
 }
 
-.clear-btn {
-  background: #ccc;
-  color: #333;
-}
-
-.clear-btn:hover {
-  background: #aaa;
-}
-
-/* Media Container */
-.media-container {
-  margin-top: 1rem;
-  text-align: center;
-}
-
-/* Image Styling (Prevent Cropping) */
-.insta-image {
-  max-width: 100%; /* Scale image to fit container width */
-  max-height: calc(100vh - 200px); /* Prevent it from exceeding viewport height */
-  width: auto; /* Maintain aspect ratio */
-  height: auto; /* Maintain aspect ratio */
-  border: 2px solid #ec407a;
-  border-radius: 6px;
-  margin-bottom: 1rem;
-}
-
-/* Video Styling */
-.insta-video {
-  max-width: 100%; /* Fit within container */
-  height: auto; /* Maintain aspect ratio */
-  border: 2px solid #ec407a;
-  border-radius: 6px;
-  margin-bottom: 1rem;
-}
-
-/* Download Button for Media */
 .download-btn {
-  background: #0072e5;
-  border-radius: 20px;
-  margin-top: 0.5rem;
+  background-color: #007bff;
+  color: white;
 }
 
 .download-btn:hover {
-  background: #005bb5;
+  background-color: #0056b3;
 }
 
-/* Footer */
+.clear-btn {
+  background-color: #6c757d;
+  color: white;
+}
+
+.clear-btn:hover {
+  background-color: #5a6268;
+}
+
+/* Result container */
+.result {
+  margin-top: 20px;
+}
+
+.result h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+/* Media styles */
+.insta-image,
+.insta-video {
+  display: block;
+  margin: 0 auto;
+  border-radius: 8px;
+  border: 2px solid #ec407a;
+  max-width: 100%; /* Adjust to fit the screen width if needed */
+}
+
+/* Footer styles */
 footer {
-  margin-top: 30px;
-  text-align: center;
+  margin-top: 40px;
+  font-size: 0.9rem;
 }
 
 footer p {
-  margin-bottom: 10px;
-  color: #444;
+  margin: 0;
+  color: #555;
+}
+
+/* Social icons */
+.social-icons {
+  margin-top: 10px;
 }
 
 .social-icons a {
   color: #ec407a;
+  margin: 0 10px;
+  font-size: 24px;
   text-decoration: none;
-  font-weight: 600;
-  margin: 0 5px;
+  transition: all 0.3s ease;
 }
 
 .social-icons a:hover {
-  text-decoration: underline;
-}
-
-/* Responsive Design */
-@media (max-width: 480px) {
-  .container {
-    margin: 20px auto;
-    padding: 20px;
-  }
-
-  h1 {
-    font-size: 1.75rem;
-  }
+  color: #f06292;
 }
