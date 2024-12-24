@@ -8,7 +8,7 @@ function App() {
   const [errorMsg, setErrorMsg] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Force a file download in the browser
+  // Force a file download
   const downloadFile = (url, filename) => {
     const link = document.createElement('a');
     link.href = url;
@@ -18,6 +18,7 @@ function App() {
     document.body.removeChild(link);
   };
 
+  // Handle the "Download" button
   const handleDownload = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -35,7 +36,7 @@ function App() {
       const response = await fetch('/api/download', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: instaUrl })
+        body: JSON.stringify({ url: instaUrl }),
       });
       const data = await response.json();
 
@@ -57,7 +58,7 @@ function App() {
     }
   };
 
-  // Clear form & results
+  // Clear input/results
   const handleClear = () => {
     setInstaUrl('');
     setVideoUrl('');
@@ -95,7 +96,7 @@ function App() {
       <div className="result">
         {errorMsg && <p style={{ color: 'red' }}>{errorMsg}</p>}
 
-        {/* If a video is found, show <video> preview & Download button */}
+        {/* Video preview & download */}
         {videoUrl && (
           <div className="media-container">
             <h3>Video Preview:</h3>
@@ -111,15 +112,11 @@ function App() {
           </div>
         )}
 
-        {/* If no video but an image is found, show <img> preview & Download button */}
+        {/* If no video, but we have imageUrl */}
         {!videoUrl && imageUrl && (
           <div className="media-container">
             <h3>Image Preview:</h3>
-            <img
-              className="insta-image"
-              src={imageUrl}
-              alt="Instagram content"
-            />
+            <img className="insta-image" src={imageUrl} alt="Instagram content" />
             <button
               className="download-btn"
               onClick={() => downloadFile(imageUrl, 'instagram-image.jpg')}
@@ -130,13 +127,14 @@ function App() {
         )}
       </div>
 
-      {/*  FOOTER SECTION  */}
+      {/* FOOTER */}
       <footer>
         <p>Made with ❤️ by Shreenidhi Vasishta</p>
         <p>Share this tool:</p>
         <div className="social-icons">
+          {/* Change these links to match your final domain if needed */}
           <a
-            href="https://facebook.com/sharer/sharer.php?u=https://instagram-downloader-rmbp.onrender.com"
+            href="https://facebook.com/sharer/sharer.php?u=https://instagram-downloader-3qi2.onrender.com"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -144,7 +142,7 @@ function App() {
           </a>
           {' | '}
           <a
-            href="https://twitter.com/intent/tweet?url=https://instagram-downloader-rmbp.onrender.com"
+            href="https://twitter.com/intent/tweet?url=https://instagram-downloader-3qi2.onrender.com"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -152,7 +150,7 @@ function App() {
           </a>
           {' | '}
           <a
-            href="https://wa.me/?text=Check%20out%20this%20Instagram%20Downloader%20by%20Shreenidhi%20Vasishta:%20https://instagram-downloader-rmbp.onrender.com"
+            href="https://wa.me/?text=Check%20out%20this%20Instagram%20Downloader%20by%20Shreenidhi%20Vasishta:%20https://instagram-downloader-3qi2.onrender.com"
             target="_blank"
             rel="noopener noreferrer"
           >
