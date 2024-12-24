@@ -13,7 +13,7 @@ app.use(express.json());
 
 // ----------------------------------------------------
 // POST /api/download
-// Body: { url: "https://www.instagram.com/p/.../" }
+// Body: { url: "https://www.instagram.com/reel/.../" }
 // ----------------------------------------------------
 app.post('/api/download', async (req, res) => {
   try {
@@ -22,7 +22,7 @@ app.post('/api/download', async (req, res) => {
       return res.status(400).json({ success: false, error: 'Instagram URL is required.' });
     }
 
-    // 1) Fetch the page HTML
+    // 1. Fetch the page HTML
     const response = await axios.get(url, {
       headers: {
         'User-Agent':
@@ -33,72 +33,71 @@ app.post('/api/download', async (req, res) => {
     });
     const $ = cheerio.load(response.data);
 
-    // 2) Attempt from OG tags first
+    // 2. Attempt to extract metadata from OG tags
     let videoUrl =
       $('meta[property="og:video:secure_url"]').attr('content') ||
       $('meta[property="og:video"]').attr('content') ||
       null;
     let imageUrl = $('meta[property="og:image"]').attr('content') || null;
 
-    // 3) If no OG video, parse window._sharedData for Reels or GraphVideo
-    if (!videoUrl) {
-      const scriptTag = $('script')
-        .filter((i, el) => {
-          const content = $(el).html().trim();
-          return content.startsWith('window._sharedData');
-        })
-        .first()
-        .html();
+    // 3. Parse window._sharedData for detailed information
+    let type = 'unknown';
+    const scriptTag = $('script')
+      .filter((i, el) => {
+        const content = $(el).html().trim();
+        return content.startsWith('window._sharedData');
+      })
+      .first()
+      .html();
 
-      if (scriptTag) {
-        const jsonStr = scriptTag.substring(
-          scriptTag.indexOf('{'),
-          scriptTag.lastIndexOf('}') + 1
-        );
+    if (scriptTag) {
+      const jsonStr = scriptTag.substring(scriptTag.indexOf('{'), scriptTag.lastIndexOf('}') + 1);
+      try {
+        const dataObj = JSON.parse(jsonStr);
+        const postPage = dataObj?.entry_data?.PostPage?.[0]?.graphql?.shortcode_media;
 
-        try {
-          const dataObj = JSON.parse(jsonStr);
-          const postPage = dataObj?.entry_data?.PostPage?.[0]?.graphql?.shortcode_media;
-          if (postPage) {
-            // Check if it's a video / reel
-            if (postPage.is_video === true && postPage.video_url) {
-              videoUrl = postPage.video_url;
+        if (postPage) {
+          const { __typename, is_video } = postPage;
+
+          // Determine type based on typename and is_video
+          if (__typename === 'GraphVideo' && is_video) {
+            type = 'reel';
+            videoUrl = postPage.video_url || videoUrl;
+          } else if (__typename === 'GraphImage' || __typename === 'GraphSidecar') {
+            type = 'post';
+            if (postPage.display_resources?.length) {
+              const largestResource = postPage.display_resources.pop();
+              imageUrl = largestResource?.src || imageUrl;
             }
-
-            // If still no video, it may be an image post (or a multi-photo carousel).
-            if (!videoUrl) {
-              // Attempt to get highest-res image
-              if (postPage.display_url) {
-                imageUrl = postPage.display_url;
-              }
-              if (postPage.display_resources?.length) {
-                const resources = postPage.display_resources;
-                const largest = resources[resources.length - 1].src;
-                imageUrl = largest || imageUrl;
-              }
-            }
+          } else if (url.includes('/reel/')) {
+            type = 'reel'; // Infer from URL structure
           }
-        } catch (err) {
-          console.error('Error parsing window._sharedData JSON:', err);
         }
+      } catch (err) {
+        console.error('Error parsing JSON from window._sharedData:', err.message);
       }
     }
 
-    // 4) If we still have no media
+    // 4. If no media is found
     if (!videoUrl && !imageUrl) {
       return res.status(404).json({
         success: false,
-        error: 'No media found. Possibly private or changed structure.',
+        error: 'No media found. The link might be private or Instagram’s structure changed.',
       });
     }
 
-    // 5) Respond with the found URLs
-    return res.status(200).json({ success: true, videoUrl, imageUrl });
+    // 5. Return the media details and type
+    return res.status(200).json({
+      success: true,
+      type,
+      videoUrl,
+      imageUrl,
+    });
   } catch (err) {
     console.error('Error scraping Instagram:', err.message);
     return res.status(500).json({
       success: false,
-      error: 'Failed to download media. Please check the URL or try again.',
+      error: 'Failed to fetch Instagram media. Please check the URL or try again later.',
     });
   }
 });
@@ -111,4 +110,5 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+// Start the server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
